@@ -1,0 +1,9 @@
+<launch>
+    <!--<node pkg="somehthign" type="somethingexe" name="something node"/>
+    <node pkg="somehthign" type="something.py" name="something node"/>-->
+
+    <node pkg="tf" type="static_transform_publisher" name="static_map_tf" args="0 0 0 0 0 0 1 map odom 100"/> <!-- for setting map coordinates -->
+    <node pkg="robot_setup_tf" type="tf_broadcaster" name="tf_broadcast"/>  <!-- the base link robot transform -->
+    <node pkg="ros_dom" type="odom" name="odometry"/> <!-- odometry -->
+
+</launch>

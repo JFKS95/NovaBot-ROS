@@ -1,0 +1,29 @@
+<launch>
+
+   <master auto="start"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="static_map_tf" args="0 0 0 0 0 0 1 map odom 100"/> <!-- for setting map coordinates -->
+    <node pkg="robot_setup_tf" type="tf_broadcaster" name="tf_broadcast"/>  <!-- the base link robot transform -->
+    <!-- <node pkg="ros_dom" type="odom" name="odometry"/> --> <!-- odometry -->
+    <node pkg="ros_dom" type="odom_with_path" name="odometry"/><!-- odometry -->
+
+
+ <!-- Run the map server --> 
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find provide_map)/map/my_map.pgm 0.004"/> -->
+    <!-- <node pkg="map_server" type="map_server" name="map_server" args="$(find provide_map)/map/testmap.yaml"/> --> <!-- for launching map server -->
+    <node pkg="map_server" type="map_server" name="map_server" args="$(find provide_map)/map/PUCKWANK.yaml"/> <!-- for launching map server -->
+    <node pkg="rviz" type="rviz" name="visualise"/> <!-- for launching rviz -->
+   
+ <!--- Run AMCL -->
+    <!-- <include file="$(find amcl)/examples/amcl_omni.launch" /> -->
+
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find my_robot_name_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find my_robot_name_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find my_robot_name_2dnav)/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find my_robot_name_2dnav)/global_costmap_params.yaml" command="load" /> 
+    <rosparam file="$(find my_robot_name_2dnav)/base_local_planner_params.yaml" command="load" />
+ </node>
+
+</launch> 

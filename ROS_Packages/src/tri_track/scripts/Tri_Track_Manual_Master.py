@@ -3,6 +3,10 @@ import xbox
 import time
 import threading
 
+#for keyboard control
+import pygame, sys
+from pygame.locals import *
+
 
 ################### Connecting to the Controller/changing angles ###################
 
@@ -241,3 +245,51 @@ def xboxController():
 
 xboxThread = threading.Thread(target=xboxController, args=())
 xboxThread.start()
+
+################### Keyboard control ########################
+
+
+def keyboardControl():
+    global forward
+    global reverse
+    global left
+    global right 
+    
+    pygame.init()
+
+    COLOUR = (0,0,0)
+    WIDTH = 640
+    HEIGHT = 480
+    windowSurface = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+
+    windowSurface.fill(COLOUR)
+    
+    while True:
+        forward = 0
+        reverse = 0
+        left = 0
+        right = 0
+        
+        #get all the user events
+        for event in pygame.event.get():
+
+            #if user wants to quit
+            if event.type == pygame.locals.QUIT:
+                #and the game close the window
+                pygame.quit()
+                sys.exit()
+
+            #if a key is pressed
+            elif event.type == pygame.locals.KEYDOWN:
+                if event.key == K_UP:
+                    print('up')
+                    forward = 1
+                if event.key == K_DOWN:
+                    reverse = 1
+                if event.key == K_LEFT:
+                    left = 1
+                if event.key == K_RIGHT:
+                    right = 1
+
+##keyboardThread = threading.Thread(target=keyboardControl, args=())
+##keyboardThread.start()       
