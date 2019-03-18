@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import rospy
-#from std_msgs.msg import String
+from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 
-
-WHEEL_DIST = 0.5
+# Distance between the robot's wheels in meteres
+WHEEL_DIST = 0.5 
 
 def callback(data):
     vLinearx = data.linear.x
@@ -13,11 +13,12 @@ def callback(data):
     #rospy.loginfo(vLinearx)
     #rospy.loginfo(vAngularz)
 
-    speed_wish_right = (vAngularz * WHEEL_DIST) / 2 + vLinearx
-    speed_wish_left = (vLinearx * 2) - speed_wish_right
+    # Convert the Twist message into velocities (m/s) for the right and left motors
+    rightWheelSpeed = (vAngularz * WHEEL_DIST) / 2 + vLinearx 
+    leftWheelSpeed = (vLinearx * 2) - rightWheelSpeed
 
-    rospy.loginfo(speed_wish_right)
-    rospy.loginfo(speed_wish_right)
+    rospy.loginfo("Right Wheel Speed: %s" % rightWheelSpeed)
+    rospy.loginfo("Left Wheel Speed:  %s" % leftWheelSpeed)
 
 
     
