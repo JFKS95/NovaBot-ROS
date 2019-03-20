@@ -27,15 +27,17 @@ int main(int argc, char** argv){
     ros::spinOnce();               // check for incoming messages
     current_time = ros::Time::now();
 
+    /*
     //compute odometry in a typical way given the velocities of the robot
     double dt = (current_time - last_time).toSec();
     double delta_x = (vx * cos(th) - vy * sin(th)) * dt;
     double delta_y = (vx * sin(th) + vy * cos(th)) * dt;
     double delta_th = vth * dt;
-
+    
     x += delta_x;
     y += delta_y;
     th += delta_th;
+    */
 
     //since all odometry is 6DOF we'll need a quaternion created from yaw
     geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
@@ -65,11 +67,17 @@ int main(int argc, char** argv){
     odom.pose.pose.position.z = 0.0;
     odom.pose.pose.orientation = odom_quat;
 
+    x = x + 0.001;
+    y = y + 0.001;
+    th = th + 0.01;
+
+    /*
     //set the velocity
     odom.child_frame_id = "base_link";
     odom.twist.twist.linear.x = vx;
     odom.twist.twist.linear.y = vy;
     odom.twist.twist.angular.z = vth;
+    */
 
     //publish the message
     odom_pub.publish(odom);
