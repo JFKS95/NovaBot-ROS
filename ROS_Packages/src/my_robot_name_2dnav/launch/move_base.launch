@@ -4,8 +4,8 @@
 
     <node pkg="tf" type="static_transform_publisher" name="static_map_tf" args="0 0 0 0 0 0 1 map odom 100"/> <!-- for setting map coordinates -->
     <node pkg="robot_setup_tf" type="tf_broadcaster" name="tf_broadcast"/>  <!-- the base link robot transform -->
-    <!-- <node pkg="ros_dom" type="odom" name="odometry"/> --> <!-- odometry -->
-    <node pkg="ros_dom" type="odom_with_path" name="odometry"/><!-- odometry -->
+    <!-- <node pkg="ros_dom" type="odom" name="odometry"/>  --><!-- odometry -->
+    <node pkg="ros_dom" type="odom_with_path" name="odometry"/> <!-- odometry -->
 
 
  <!-- Run the map server --> 
